@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 
 		GameObject go2 = GameObject.Find("Count Text");
 		Assert.IsNotNull( go2 );
-		countText = go.GetComponent<Text>();
+		countText = go2.GetComponent<Text>();
 		Assert.IsNotNull( countText );
 
 		pickSnd = GetComponent<AudioSource>();
