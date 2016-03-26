@@ -90,9 +90,9 @@ namespace CompleteProject
 							{ "scene ID", SceneManager.GetActiveScene().buildIndex },
 							{ "coins", ball.count },
 							{ "time sec",  goalTimeSec },
-							{ "time bar",  goalTimeSec.ToString() },
+							{ "time bar",  "TIME:" + String.Format("{0:00}", goalTimeSec) },
 						});
-					}
+				}
 			}
 		}
 

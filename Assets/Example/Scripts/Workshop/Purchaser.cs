@@ -179,7 +179,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 
 
 	// Restore purchases previously made by this customer. Some platforms automatically restore purchases. Apple currently requires explicit purchase restoration for IAP.
-	// 以前買ったことがある商品のリストア処理。いくつかのプラットフォームは自動的にリストアする。AppleはIAPの中え明示的に購入リストアを要求している
+	// 以前買ったことがある商品のリストア処理。いくつかのプラットフォームは自動的にリストアする。AppleはIAPの中で明示的に購入リストアを要求している
 	public void RestorePurchases()
 	{
 		// If Purchasing has not yet been set up ...
@@ -206,7 +206,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 			// 購入リストアの非同期処理を開始。下記のAction<bool> の中で、確認プロセスが呼び出される。もし以前買っているのならProcessPurchaseが呼び出される
 			apple.RestoreTransactions((result) => {
 				// The first phase of restoration. If no more responses are received on ProcessPurchase then no purchases are available to be restored.
-				// リストア処理お最初のフェーズ。もし、ProcessPurchaseで反応がないのなら、リストアするべき購入はなかったということ
+				// リストア処理の最初のフェーズ。もし、ProcessPurchaseで反応がないのなら、リストアするべき購入はなかったということ
 				Debug.Log("RestorePurchases continuing: " + result + ". If no further messages, no purchases available to restore.");
 			});
 		}
@@ -233,7 +233,7 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		// 全体のPurchasingシステム。このアプリケーションの製品を構成している。
 		m_StoreController = controller;
 		// Store specific subsystem, for accessing device-specific store features.
-		// ストア特有おサブシステム。デバイス特有のストアへのアクセス等ができる。
+		// ストア特有のサブシステム。デバイス特有のストアへのアクセス等ができる。
 		m_StoreExtensionProvider = extensions;
 	}
 
@@ -252,8 +252,8 @@ public class Purchaser : MonoBehaviour, IStoreListener
 		//"ProcessPurchase: PASS" message on the Console. On a device you would see the OS pop-up confirming the purchase
 		// A consumable product has been purchased by this user.
 		// 消費型の購入が成功した結果でここにくる。
-		// エディタでは、「Buy」と押すと、すぐにコンソールに「ProcessPurchase: PASS」と表示される
-		// デバイスでは、ポップアップで購入確認ウィンドウが出るだろう
+		// エディタでは、「Buy」と押すと、すぐにコンソールに「ProcessPurchase: PASS」と表示される。
+		// 本来デバイスでは、ポップアップで購入確認ウィンドウが出る。
 		if (String.Equals(args.purchasedProduct.definition.id, kProductIDConsumable, StringComparison.Ordinal))
 		{
 			Debug.Log(string.Format("ProcessPurchase: PASS. Product: '{0}'", args.purchasedProduct.definition.id));//If the consumable item has been successfully purchased, add 100 coins to the player's in-game score.ScoreManager.score += 100;
