@@ -25,3 +25,6 @@ ExportedObj/
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# UnityAds setting file
+/ProjectSettings/UnityAdsSettings.asset
