@@ -44,8 +44,8 @@ namespace CompleteProject
 		{
 			// Input系はUpdateで
 			#if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
-			moveHorizontal = -gyroObj.transform.forward.z;
-			moveVertical = gyroObj.transform.forward.x;
+			moveHorizontal = gyroObj.transform.forward.z;
+			moveVertical = -gyroObj.transform.forward.x;
 			#else
 			moveHorizontal = Input.GetAxis("Horizontal");
 			moveVertical = Input.GetAxis("Vertical");
