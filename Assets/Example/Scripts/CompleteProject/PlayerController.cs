@@ -92,9 +92,12 @@ namespace CompleteProject
 			}
 		}
 
-		void SetCountText()
+		public void SetCountText()
 		{
-			countText.text = "Item:" + count.ToString() + "/" + totalItem;
+			//if ( countText ) 
+			{
+				countText.text = "Item:" + count.ToString() + "/" + totalItem;
+			}
 		}
 	}
 }
