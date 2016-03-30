@@ -8,11 +8,13 @@ public class MyUnitTest {
     public void EditorTest()
     {
         //Arrange
-		GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Example/Prefabs/Player.prefab");
+		GameObject go = AssetDatabase.LoadAssetAtPath<GameObject>
+			("Assets/Example/Prefabs/Player.prefab");
 		Assert.NotNull(go);
 
         //Act
-		CompleteProject.PlayerController player = go.GetComponent<CompleteProject.PlayerController>();
+		CompleteProject.PlayerController player = 
+			go.GetComponent<CompleteProject.PlayerController>();
 		player.SetCountText();
 
         //Assert

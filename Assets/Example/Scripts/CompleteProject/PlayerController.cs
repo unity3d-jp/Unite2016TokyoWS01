@@ -43,7 +43,7 @@ namespace CompleteProject
 		void Update()
 		{
 			// Input系はUpdateで
-			#if UNITY_IOS || UNITY_ANDROID
+			#if (UNITY_IOS || UNITY_ANDROID) && !UNITY_EDITOR
 			moveHorizontal = -gyroObj.transform.forward.x;
 			moveVertical = -gyroObj.transform.forward.z;
 			#else
