@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
+using UnityEngine.Purchasing.Security;
 
 // Placing the Purchaser class in the CompleteProject namespace allows it to interact with ScoreManager, one of the existing Survival Shooter scripts.
 namespace CompleteProject
@@ -28,9 +29,9 @@ namespace CompleteProject
 		private static string kProductNameAppleNonConsumable = "com.unity3d.test.services.purchasing.nonconsumable";      // Apple App Store identifier for the non-consumable product.
 		private static string kProductNameAppleSubscription =  "com.unity3d.test.services.purchasing.subscription";       // Apple App Store identifier for the subscription product.
 
-		private static string kProductNameGooglePlayConsumable =    "com.unity3d.test.services.purchasing.consumable";        // Google Play Store identifier for the consumable product.
-		private static string kProductNameGooglePlayNonConsumable = "com.unity3d.test.services.purchasing.nonconsumable";     // Google Play Store identifier for the non-consumable product.
-		private static string kProductNameGooglePlaySubscription =  "com.unity3d.test.services.purchasing.subscription";  // Google Play Store identifier for the subscription product.
+		private static string kProductNameGooglePlayConsumable =    "com.warapuri.runontheedge.googleplay.consumable";    // Google Play Store identifier for the consumable product.
+		private static string kProductNameGooglePlayNonConsumable = "com.warapuri.runontheedge.googleplay.nonconsumable2"; // Google Play Store identifier for the non-consumable product.
+		private static string kProductNameGooglePlaySubscription =  "com.warapuri.runontheedge.googleplay.subscription";  // Google Play Store identifier for the subscription product.
 
 //		private static string kProductNameGooglePlayConsumable =    "consumable";        // Google Play Store identifier for the consumable product.
 //		private static string kProductNameGooglePlayNonConsumable = "nonconsumable";     // Google Play Store identifier for the non-consumable product.
@@ -216,6 +217,29 @@ namespace CompleteProject
 
 		public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) 
 		{
+			// Unity IAP's validation logic is only included on these platforms.
+			#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE_OSX
+			// Prepare the validator with the secrets we prepared in the Editor
+			// obfuscation window.
+			var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
+				AppleTangle.Data(), Application.bundleIdentifier);
+
+			try {
+				// On Google Play, result will have a single product Id.
+				// On Apple stores receipts contain multiple products.
+				var result = validator.Validate(args.purchasedProduct.receipt);
+				Debug.Log("Receipt is valid. Contents:");
+				foreach (IPurchaseReceipt productReceipt in result) {
+					Debug.Log(productReceipt.productID);
+					Debug.Log(productReceipt.purchaseDate);
+					Debug.Log(productReceipt.transactionID);
+				}
+				// Unlock the appropriate content here.
+			} catch (IAPSecurityException) {
+				Debug.LogError("Invalid receipt, not unlocking content");
+			}
+			#endif
+
 			//@Angelo: here is the result of a successful purchase of a consumable (100 coins, in our case), in the Editor once you press the "Buy" button you'll immediately see the
 			//"ProcessPurchase: PASS" message on the Console. On a device you would see the OS pop-up confirming the purchase
 			// A consumable product has been purchased by this user.
